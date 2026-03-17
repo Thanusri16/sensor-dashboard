@@ -1,0 +1,41 @@
+let tempData = [];
+let labels = [];
+
+let ctx = document.getElementById('chart').getContext('2d');
+
+let chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Temperature',
+            data: tempData,
+            borderColor: 'cyan',
+            fill: false
+        }]
+    }
+});
+
+function updateData() {
+    let temp = Math.floor(Math.random() * 100);
+    let volt = (Math.random() * 10).toFixed(2);
+
+    document.getElementById("temp").innerText = temp;
+    document.getElementById("volt").innerText = volt;
+
+    tempData.push(temp);
+    labels.push("");
+
+    if (tempData.length > 10) {
+        tempData.shift();
+        labels.shift();
+    }
+
+    chart.update();
+
+    if (temp > 70) {
+        alert("⚠️ High Temperature!");
+    }
+}
+
+setInterval(updateData, 2000);
